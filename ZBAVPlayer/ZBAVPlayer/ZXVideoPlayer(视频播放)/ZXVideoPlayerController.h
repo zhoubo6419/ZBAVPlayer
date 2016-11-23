@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ZXVideo.h"
+#import "ZXVideoPlayerControlView.h"
+
 @import MediaPlayer;
 
 #define kZXVideoPlayerOriginalWidth  MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)
@@ -24,9 +26,9 @@
 @property (nonatomic, copy) void(^videoPlayerWillChangeToOriginalScreenModeBlock)();
 /// 将要切换到全屏模式
 @property (nonatomic, copy) void(^videoPlayerWillChangeToFullScreenModeBlock)();
-
+/// 播放器视图
+@property (nonatomic, strong) ZXVideoPlayerControlView *videoControl;
 - (instancetype)initWithFrame:(CGRect)frame;
 /// 展示播放器
 - (void)showInView:(UIView *)view;
-
 @end

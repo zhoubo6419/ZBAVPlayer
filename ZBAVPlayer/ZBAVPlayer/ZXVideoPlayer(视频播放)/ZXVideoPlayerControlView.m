@@ -280,7 +280,8 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeInterval = 5.0;
 {
     if (!_backButton) {
         _backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kVideoControlBarHeight , kVideoControlBarHeight)];
-        [_backButton setImage:[UIImage imageNamed:@"zx-video-banner-back"] forState:UIControlStateNormal];
+        [_backButton setImage:[UIImage imageNamed:@"zx-video-banner-back"] forState:UIControlStateSelected];
+         [_backButton setImage:[UIImage imageNamed:@"删除@2x"] forState:UIControlStateNormal];
         _backButton.contentEdgeInsets = UIEdgeInsetsMake(5, 0, -5, 0);
         _backButton.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);
     }

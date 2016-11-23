@@ -7,7 +7,6 @@
 //
 
 #import "ZXVideoPlayerController.h"
-#import "ZXVideoPlayerControlView.h"
 #import <AVFoundation/AVFoundation.h>
 
 typedef NS_ENUM(NSInteger, ZXPanDirection){
@@ -20,8 +19,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 
 @interface ZXVideoPlayerController () <UIGestureRecognizerDelegate>
 
-/// 播放器视图
-@property (nonatomic, strong) ZXVideoPlayerControlView *videoControl;
+
 /// 是否已经全屏模式
 @property (nonatomic, assign) BOOL isFullscreenMode;
 /// 是否锁定
@@ -68,9 +66,15 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
         [self configControlAction];
         [self configDeviceOrientationObserver];
         [self configVolume];
+        
+        //进入到后台和回到前台
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterPlayGround) name:UIApplicationDidBecomeActiveNotification object:nil];
+//
     }
     return self;
 }
+
 
 #pragma mark -
 #pragma mark - UIGestureRecognizerDelegate
@@ -94,7 +98,6 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     if ([UIApplication sharedApplication].statusBarStyle !=  UIStatusBarStyleLightContent) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }
-    
     [view addSubview:self.view];
     
     self.view.alpha = 0.0;
@@ -511,14 +514,17 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     }
     
     if (self.videoPlayerWillChangeToFullScreenModeBlock) {
+        
         self.videoPlayerWillChangeToFullScreenModeBlock();
     }
     
     self.frame = [UIScreen mainScreen].bounds;
-
     self.isFullscreenMode = YES;
     self.videoControl.fullScreenButton.hidden = YES;
     self.videoControl.shrinkScreenButton.hidden = NO;
+    
+    //
+    _videoControl.backButton.selected = YES;
 }
 
 /// 切换到竖屏模式
@@ -533,6 +539,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     }
     
     if (self.videoPlayerWillChangeToOriginalScreenModeBlock) {
+        
         self.videoPlayerWillChangeToOriginalScreenModeBlock();
     }
     
@@ -541,6 +548,10 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     self.isFullscreenMode = NO;
     self.videoControl.fullScreenButton.hidden = NO;
     self.videoControl.shrinkScreenButton.hidden = YES;
+    
+    //改变按钮
+    _videoControl.backButton.selected = NO;
+
 }
 
 /// 手动切换设备方向
@@ -556,6 +567,22 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
         [invocation invoke];
     }
 }
+////程序进入后台（如果播放，则暂停，否则不管）
+//- (void)appDidEnterBackground{
+//    
+//    [self pause];
+//    self.videoControl.playButton.hidden = NO;
+//    self.videoControl.pauseButton.hidden = YES;
+//
+//}
+////程序进入前台（退出前播放，进来后继续播放，否则不管）
+//- (void)appDidEnterPlayGround{
+//    
+//    [self play];
+//    self.videoControl.playButton.hidden = YES;
+//    self.videoControl.pauseButton.hidden = NO;
+//}
+//
 
 #pragma mark -
 #pragma mark - Action Code
