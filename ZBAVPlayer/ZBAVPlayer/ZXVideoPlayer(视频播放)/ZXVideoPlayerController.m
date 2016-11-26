@@ -19,7 +19,6 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 
 @interface ZXVideoPlayerController () <UIGestureRecognizerDelegate>
 
-
 /// 是否已经全屏模式
 @property (nonatomic, assign) BOOL isFullscreenMode;
 /// 是否锁定
@@ -52,31 +51,92 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 {
     self = [super init];
     if (self) {
+        
         self.view.frame = frame;
         self.view.backgroundColor = [UIColor blackColor];
         self.controlStyle = MPMovieControlStyleNone;
+        self.scalingMode = MPMovieScalingModeFill;
         [self.view addSubview:self.videoControl];
         self.videoControl.frame = self.view.bounds;
-        
+
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panDirection:)];
         pan.delegate = self;
         [self.videoControl addGestureRecognizer:pan];
-        
+        [self.videoControl.indicatorView startAnimating];
         [self configObserver];
         [self configControlAction];
         [self configDeviceOrientationObserver];
         [self configVolume];
-        
-        //进入到后台和回到前台
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterPlayGround) name:UIApplicationDidBecomeActiveNotification object:nil];
-//
     }
     return self;
 }
 
 
-#pragma mark -
+#pragma mark - 失败的处理
+/*    //判断是否取得了播放的时间
+ if (self.duration == 0) {//播放失败
+ if (_loadtype == nil) {
+ 
+ _loadtype = [[LoadingType alloc] initWithFrame: self.view.bounds];
+ _loadtype.isSuccess = NO;
+ _loadtype.Errorcontroll.hidden = NO;
+ _loadtype.titlelabel.hidden = YES;
+ _loadtype.Nextbutton.hidden = YES;
+ _loadtype.repeatbutton.hidden = YES;
+ 
+ WEAK_SELF;
+ [_loadtype setLoadActionBlock:^(BOOL isSuccess, NSInteger tags) {
+ 
+ [weakSelf.loadtype removeFromSuperview];
+ if (tags == 11251101) {//删除按钮
+ 
+ if (weakSelf.isFullscreenMode) {
+ 
+ }else{//关闭视图控制器
+ 
+ [weakSelf.delegete setClose];
+ 
+ }
+ }
+ if (isSuccess == YES) {//播放完成
+ 
+ if (tags == 11251200){//学习下一个
+ 
+ [weakSelf.delegete setNext];
+ 
+ }else if (tags == 11251201){//重播
+ 
+ [weakSelf.delegete setagain];
+ 
+ }
+ 
+ }else{
+ if (tags == 11251100) {
+ //重新加载视频
+ [weakSelf.delegete setagain];
+ }
+ 
+ }
+ //isFullscreenMode
+ 
+ }];
+ [self.view addSubview:_loadtype];
+ 
+ }else{
+ 
+ _loadtype.frame = self.view.bounds;
+ [_loadtype setloutviews];
+ _loadtype.isSuccess = NO;
+ _loadtype.Errorcontroll.hidden = NO;
+ _loadtype.titlelabel.hidden = YES;
+ _loadtype.Nextbutton.hidden = YES;
+ _loadtype.repeatbutton.hidden = YES;
+ 
+ [self.view addSubview:_loadtype];
+ 
+ }
+ }
+*/
 #pragma mark - UIGestureRecognizerDelegate
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
@@ -142,6 +202,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     CGFloat duration = self.duration;
     self.videoControl.progressSlider.minimumValue = 0.f;
     self.videoControl.progressSlider.maximumValue = floor(duration);
+    
 }
 
 /// 监听播放进度
@@ -176,6 +237,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     self.videoControl.timeLabel.text = [NSString stringWithFormat:@"%@/%@",timeElapsedString,timeRmainingString];
 }
 
+
 /// 开启定时器
 - (void)startDurationTimer
 {
@@ -195,11 +257,78 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     }
 }
 
-/// MARK: 播放器状态通知
+
+//播放完成
+- (void)finishedPlay{
+    //展示播放完成后是重新播放还是下一个视频
+    if (_loadtype == nil) {
+        
+        _loadtype = [[LoadingType alloc] initWithFrame: self.view.bounds];
+        _loadtype.isSuccess = YES;
+        _loadtype.Errorcontroll.hidden = YES;
+        _loadtype.titlelabel.hidden = NO;
+        _loadtype.Nextbutton.hidden = NO;
+        _loadtype.repeatbutton.hidden = NO;
+
+        WEAK_SELF;
+        [_loadtype setLoadActionBlock:^(BOOL isSuccess, NSInteger tags) {
+            
+            [weakSelf.loadtype removeFromSuperview];
+            if (tags == 11251101) {//删除按钮
+                
+                if (weakSelf.isFullscreenMode) {
+                    
+                }else{//关闭视图控制器
+                    
+                    [weakSelf.delegete setClose];
+                    
+                }
+            }
+            if (isSuccess == YES) {//播放完成
+                
+                 if (tags == 11251200){//学习下一个
+                     
+                     [weakSelf.delegete setNext];
+
+                }else if (tags == 11251201){//重播
+                    
+                    [weakSelf.delegete setagain];
+
+                }
+                
+            }else{
+                if (tags == 11251100) {
+                    //重新加载视频
+                    [weakSelf.delegete setagain];
+                }
+                
+            }
+            //isFullscreenMode
+        
+        }];
+        [self.view addSubview:_loadtype];
+        
+    }else{
+        
+        _loadtype.frame = self.view.bounds;
+        [_loadtype setloutviews];
+        _loadtype.isSuccess = YES;
+        _loadtype.Errorcontroll.hidden = YES;
+        _loadtype.titlelabel.hidden = NO;
+        _loadtype.Nextbutton.hidden = NO;
+        _loadtype.repeatbutton.hidden = NO;
+        [self.view addSubview:_loadtype];
+
+    }
+    
+}
 
 /// 监听播放器状态通知
 - (void)configObserver
 {
+    // 监听播放完成
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finishedPlay) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+
     // 播放状态改变，可配合playbakcState属性获取具体状态
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onMPMoviePlayerPlaybackStateDidChangeNotification) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
     
@@ -241,9 +370,39 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 - (void)onMPMoviePlayerLoadStateDidChangeNotification
 {
     NSLog(@"MPMoviePlayer  LoadStateDidChange  Notification");
-    
-    if (self.loadState & MPMovieLoadStateStalled) {
+
+    if (self.loadState == MPMovieLoadStatePlayable) {///*加载完成，可以播放*/
+        
+        [self.videoControl.indicatorView stopAnimating];
+
+        if (_starttime > 0) {//设置了起始播放时间
+            //提示起始播放时间
+            NSInteger time = _starttime;
+            [MBProgressHUD showError:[NSString stringWithFormat:@"您上次观看到%ld",time] toView:self.view];
+            
+            //当前的播放时间
+            [self setCurrentPlaybackTime:_starttime];
+            // 更新时间
+            [self setTimeLabelValues:_starttime totalTime: self.duration];
+            // 更新播放进度
+            self.videoControl.progressSlider.value = _starttime;
+            
+        }
+        
+    }else if (self.loadState == MPMovieLoadStateUnknown){///*未知状态*/
+        
+        //展示播放失败的界面信息
+        [self.videoControl.indicatorView stopAnimating];
+        
+
+    }else if (self.loadState == MPMovieLoadStateStalled){/*缓冲中*/
+        
         [self.videoControl.indicatorView startAnimating];
+
+    }else{/*缓冲完成，可以连续播放*/
+        
+        [self.videoControl.indicatorView stopAnimating];
+
     }
 }
 
@@ -256,13 +415,16 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 /// 确定了媒体播放时长
 - (void)onMPMovieDurationAvailableNotification
 {
+    
     NSLog(@"MPMovie  DurationAvailable  Notification");
     [self startDurationTimer];
     [self setProgressSliderMaxMinValues];
-    
+
     self.videoControl.fullScreenButton.hidden = NO;
     self.videoControl.shrinkScreenButton.hidden = YES;
+    
 }
+
 
 /// 控制视图隐藏
 - (void)onPayerControlViewHideNotification
@@ -275,7 +437,6 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 }
 
 /// MARK: pan手势处理
-
 /// pan手势触发
 - (void)panDirection:(UIPanGestureRecognizer *)pan
 {
@@ -320,6 +481,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
             break;
         case UIGestureRecognizerStateEnded: { // 移动停止
             switch (self.panDirection) {
+                    
                 case ZXPanDirectionHorizontal: {
                     [self setCurrentPlaybackTime:floor(self.sumTime)];
                     [self play];
@@ -395,6 +557,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
         // 调节系统音量
         // [MPMusicPlayerController applicationMusicPlayer].volume 这种简单的方式调节音量也可以，只是CPU高一点点
         self.volumeViewSlider.value -= value / 10000;
+        
     }else {
         // 亮度
         [UIScreen mainScreen].brightness -= value / 10000;
@@ -417,7 +580,6 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
             break;
         }
     }
-    
     // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
     NSError *error = nil;
     BOOL success = [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &error];
@@ -525,6 +687,9 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     
     //
     _videoControl.backButton.selected = YES;
+    
+    
+
 }
 
 /// 切换到竖屏模式
@@ -567,24 +732,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
         [invocation invoke];
     }
 }
-////程序进入后台（如果播放，则暂停，否则不管）
-//- (void)appDidEnterBackground{
-//    
-//    [self pause];
-//    self.videoControl.playButton.hidden = NO;
-//    self.videoControl.pauseButton.hidden = YES;
-//
-//}
-////程序进入前台（退出前播放，进来后继续播放，否则不管）
-//- (void)appDidEnterPlayGround{
-//    
-//    [self play];
-//    self.videoControl.playButton.hidden = YES;
-//    self.videoControl.pauseButton.hidden = NO;
-//}
-//
 
-#pragma mark -
 #pragma mark - Action Code
 
 /// 返回按钮点击
@@ -701,6 +849,8 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     [self stop];
     [super setContentURL:contentURL];
     [self play];
+    
+
 }
 
 - (ZXVideoPlayerControlView *)videoControl
@@ -732,6 +882,7 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     self.videoControl.titleLabel.text = self.video.title;
     // play url
     self.contentURL = [NSURL URLWithString:self.video.playUrl];
+    
 }
 
 @end

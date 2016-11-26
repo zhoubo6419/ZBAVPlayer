@@ -10,6 +10,15 @@
 #import "ZXVideo.h"
 #import "ZXVideoPlayerControlView.h"
 
+@protocol LoadingTypeDelegate <NSObject>
+///关闭播放视图
+- (void)setClose;
+///下一个视频
+- (void)setNext;
+//重新播放
+- (void)setagain;
+@end
+
 @import MediaPlayer;
 
 #define kZXVideoPlayerOriginalWidth  MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)
@@ -28,7 +37,14 @@
 @property (nonatomic, copy) void(^videoPlayerWillChangeToFullScreenModeBlock)();
 /// 播放器视图
 @property (nonatomic, strong) ZXVideoPlayerControlView *videoControl;
+///开始播放的图片
+@property (nonatomic,assign)NSTimeInterval starttime;
+///加载成功或者失败的视图
+@property (nonatomic,strong)LoadingType *loadtype;
+///LoadingType代理者
+@property (nonatomic,strong)id <LoadingTypeDelegate> delegete;
 - (instancetype)initWithFrame:(CGRect)frame;
 /// 展示播放器
 - (void)showInView:(UIView *)view;
+
 @end

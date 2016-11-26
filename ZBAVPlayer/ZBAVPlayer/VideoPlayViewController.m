@@ -10,7 +10,7 @@
 #import "ZXVideoPlayerController.h"
 #import "ZXVideo.h"
 
-@interface VideoPlayViewController ()
+@interface VideoPlayViewController ()<LoadingTypeDelegate>
 
 @property (nonatomic, strong) ZXVideoPlayerController *videoController;
 
@@ -49,7 +49,8 @@
     if (!self.videoController) {
         //kZXVideoPlayerOriginalHeight
         self.videoController = [[ZXVideoPlayerController alloc] initWithFrame:CGRectMake(0, 0, kZXVideoPlayerOriginalWidth,200)];
-        
+        self.videoController.starttime = 60;
+        self.videoController.delegete = self;
         __weak typeof(self) weakSelf = self;
         self.videoController.videoPlayerGoBackBlock = ^{
             __strong typeof(self) strongSelf = weakSelf;
@@ -88,6 +89,38 @@
     [self.navigationController popViewControllerAnimated:YES];
 
     
+}
+
+#pragma mark - 代理的办法
+///关闭播放视图
+- (void)setClose{
+    [[NSUserDefaults standardUserDefaults] setObject:@0 forKey:@"ZXVideoPlayer_DidLockScreen"];
+    [self.videoController.view removeFromSuperview];
+    self.videoController = nil;
+
+}
+///下一个视频
+- (void)setNext{
+    ZXVideo *video = [[ZXVideo alloc] init];
+    video.title  = @"测试";
+    video.playUrl =  @"http://baobab.wdjcdn.com/1456231710844S(24).mp4";
+    self.videoController.video = video;
+    self.videoController.starttime = 60;
+    [self.videoController play];
+    self.videoController.videoControl.playButton.hidden = YES;
+    self.videoController.videoControl.pauseButton.hidden = NO;
+
+
+}
+//重新播放
+- (void)setagain{
+    
+    self.videoController.video = self.video;
+    [self.videoController play];
+    self.videoController.starttime = 0;
+    self.videoController.videoControl.playButton.hidden = YES;
+    self.videoController.videoControl.pauseButton.hidden = NO;
+
 }
 
 @end

@@ -11,7 +11,7 @@
 #import "ZXVideoPlayerBrightnessView.h"
 #import "ZXVideoPlayerVolumeView.h"
 #import "ZXVideoPlayerBatteryView.h"
-
+#import "LoadingType.h"
 #define kZXPlayerControlViewHideNotification @"ZXPlayerControlViewHideNotification"
 
 @protocol ZXVideoPlayerControlViewDelegage <NSObject>
@@ -52,7 +52,6 @@
 @property (nonatomic, strong, readwrite) ZXVideoPlayerBatteryView *batteryView;
 /// 标题
 @property (nonatomic, strong, readwrite) UILabel *titleLabel;
-
 - (void)animateHide;
 - (void)animateShow;
 - (void)autoFadeOutControlBar;

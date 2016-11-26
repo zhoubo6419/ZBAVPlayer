@@ -13,6 +13,7 @@
 		4E5CE4351DE2E605005479EE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CE4331DE2E605005479EE /* MBProgressHUD.m */; };
 		4E5CE43B1DE2E695005479EE /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CE43A1DE2E695005479EE /* BaseNavigationController.m */; };
 		4E5CE4421DE2F6E1005479EE /* DownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CE4411DE2F6E1005479EE /* DownloadController.m */; };
+		4E9F40D11DE820E200719747 /* LoadingType.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E9F40D01DE820E200719747 /* LoadingType.m */; };
 		4EA131431DE494A300B6D9E0 /* kr-video-player-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EA131191DE494A300B6D9E0 /* kr-video-player-close@2x.png */; };
 		4EA131441DE494A300B6D9E0 /* kr-video-player-close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EA1311A1DE494A300B6D9E0 /* kr-video-player-close@3x.png */; };
 		4EA131451DE494A300B6D9E0 /* kr-video-player-fullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EA1311B1DE494A300B6D9E0 /* kr-video-player-fullscreen@2x.png */; };
@@ -82,6 +83,8 @@
 		4E5CE43A1DE2E695005479EE /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		4E5CE4401DE2F6E1005479EE /* DownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadController.h; sourceTree = "<group>"; };
 		4E5CE4411DE2F6E1005479EE /* DownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadController.m; sourceTree = "<group>"; };
+		4E9F40CF1DE820E200719747 /* LoadingType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingType.h; sourceTree = "<group>"; };
+		4E9F40D01DE820E200719747 /* LoadingType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingType.m; sourceTree = "<group>"; };
 		4EA131191DE494A300B6D9E0 /* kr-video-player-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kr-video-player-close@2x.png"; sourceTree = "<group>"; };
 		4EA1311A1DE494A300B6D9E0 /* kr-video-player-close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kr-video-player-close@3x.png"; sourceTree = "<group>"; };
 		4EA1311B1DE494A300B6D9E0 /* kr-video-player-fullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kr-video-player-fullscreen@2x.png"; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		4EA1316B1DE496A800B6D9E0 /* 下载@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "下载@2x.png"; sourceTree = "<group>"; };
 		4EA1316F1DE4A48300B6D9E0 /* 在线播放@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "在线播放@2x.png"; sourceTree = "<group>"; };
 		4EAA674D1DE55A48006C02C2 /* 删除@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "删除@2x.png"; sourceTree = "<group>"; };
+		4EAC85F11DE86DF4009FB20A /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		4EB04A361DE3DBD500E1DE95 /* VideoplayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoplayCell.h; sourceTree = "<group>"; };
 		4EB04A371DE3DBD500E1DE95 /* VideoplayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoplayCell.m; sourceTree = "<group>"; };
 		4EDAE96C1DE32E04005026FB /* PurchaseCarAnimationTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseCarAnimationTool.h; sourceTree = "<group>"; };
@@ -196,6 +200,8 @@
 				4EA131401DE494A300B6D9E0 /* ZXVideoPlayerTimeIndicatorView.m */,
 				4EA131411DE494A300B6D9E0 /* ZXVideoPlayerVolumeView.h */,
 				4EA131421DE494A300B6D9E0 /* ZXVideoPlayerVolumeView.m */,
+				4E9F40CF1DE820E200719747 /* LoadingType.h */,
+				4E9F40D01DE820E200719747 /* LoadingType.m */,
 			);
 			path = "ZXVideoPlayer(视频播放)";
 			sourceTree = "<group>";
@@ -304,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				4EE069B51DE28EA900F3004E /* main.m */,
+				4EAC85F11DE86DF4009FB20A /* Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -434,6 +441,7 @@
 				4EE069B91DE28EA900F3004E /* AppDelegate.m in Sources */,
 				4EA131651DE494A300B6D9E0 /* ZXVideoPlayerVolumeView.m in Sources */,
 				4EA1315F1DE494A300B6D9E0 /* ZXVideo.m in Sources */,
+				4E9F40D11DE820E200719747 /* LoadingType.m in Sources */,
 				4EDAE96E1DE32E04005026FB /* PurchaseCarAnimationTool.m in Sources */,
 				4EA131681DE4954F00B6D9E0 /* VideoPlayViewController.m in Sources */,
 				4EA131641DE494A300B6D9E0 /* ZXVideoPlayerTimeIndicatorView.m in Sources */,
@@ -571,6 +579,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: 1436640281@qq.com (G5X25RJPQM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8WX366E7FC;
+				GCC_PREFIX_HEADER = "/Users/hanyujie/Desktop/视频播放和下载的代码/ZBAVPlayer/ZBAVPlayer/Header.h";
 				INFOPLIST_FILE = ZBAVPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -587,6 +596,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: 1436640281@qq.com (G5X25RJPQM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8WX366E7FC;
+				GCC_PREFIX_HEADER = "/Users/hanyujie/Desktop/视频播放和下载的代码/ZBAVPlayer/ZBAVPlayer/Header.h";
 				INFOPLIST_FILE = ZBAVPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

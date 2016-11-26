@@ -40,7 +40,6 @@
 //已经下载完成的任务
 - (void)setTask:(NSDictionary *)task{
     //视频名字
-    
     _namelabel.text = task[@"saveName"];
     
     //视频的图片（拼接图片）

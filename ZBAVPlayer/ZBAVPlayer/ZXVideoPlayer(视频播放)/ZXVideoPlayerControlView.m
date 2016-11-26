@@ -112,6 +112,9 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeInterval = 5.0;
  //  self.batteryView.frame = CGRectMake(CGRectGetMinX(self.lockButton.frame) - CGRectGetWidth(self.batteryView.bounds) - 10, CGRectGetMidY(self.topBar.bounds) - CGRectGetHeight(self.batteryView.bounds) / 2, CGRectGetWidth(self.batteryView.bounds), CGRectGetHeight(self.batteryView.bounds));
     // 标题
     self.titleLabel.frame = CGRectMake(CGRectGetWidth(self.backButton.bounds), 20, CGRectGetWidth(self.topBar.bounds) - CGRectGetWidth(self.backButton.bounds) - CGRectGetWidth(self.lockButton.bounds), kVideoControlBarHeight - 20);
+    
+    //播放完成和加载失败的提示视图
+    
 }
 
 - (void)didMoveToSuperview
@@ -246,7 +249,7 @@ static const CGFloat kVideoControlBarAutoFadeOutTimeInterval = 5.0;
     if (!_progressSlider) {
         _progressSlider = [[UISlider alloc] init];
         [_progressSlider setThumbImage:[UIImage imageNamed:@"kr-video-player-point"] forState:UIControlStateNormal];
-        [_progressSlider setMinimumTrackTintColor:[UIColor whiteColor]];
+        [_progressSlider setMinimumTrackTintColor:[UIColor orangeColor]];
         [_progressSlider setMaximumTrackTintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.4]];
         _progressSlider.value = 0.f;
         _progressSlider.continuous = YES;

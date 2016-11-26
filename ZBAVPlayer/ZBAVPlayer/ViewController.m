@@ -40,7 +40,7 @@
     //创建标示图
     _cellid = @"cellid1";
     _dataArray = @[
-                   @"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4",
+                   @"http://baobab.wdjcdn.com/1456665467509qingshu1.mp4",
                    @"http://baobab.wdjcdn.com/1456117847747a_x264.mp4",
                    @"http://baobab.wdjcdn.com/14525705791193.mp4",
                    @"http://baobab.wdjcdn.com/1456459181808howtoloseweight_x264.mp4",
